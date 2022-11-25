@@ -1,5 +1,7 @@
+import { addDoc, collection } from 'firebase/firestore';
 import { useRouter } from 'next/router'
 import { useState } from 'react';
+import { database } from '../firebase';
 
 
 
@@ -9,8 +11,20 @@ function Insert() {
   const [marks, setMarks] = useState("");
 
   function insertRecord(){
-    console.log(name);
-    console.log(marks);  
+    addDoc(collection(database, 'Students'), {
+      name: name,
+      marks: marks
+    })
+    .then(() => {
+      alert('Data Saved');
+      setName('');
+      setMarks('');
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    // console.log(name);
+    // console.log(marks);  
   }
 
 
